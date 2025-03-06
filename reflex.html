@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Name Reflexes</title> <!-- Replace 'Your Name' with your actual name -->
+  <title>Prudhvi Chigurupati Reflexes</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,53 +24,58 @@
 </head>
 <body>
 
-  <h1>Prudhvi Chigurupati Reflexes</h1> <!-- Replace 'Your Name' with your actual name -->
+  <h1>Your Name Reflexes</h1>
 
-  <!-- Step 3: Two DIV elements -->
+  <!-- Displays the user's result -->
   <div id="target">Your time</div>
-  <div id="counter">Count: 0</div>
 
-  <!-- Step 4: Two buttons -->
+  <!-- Countdown display -->
+  <div id="counter">Count: 5</div>
+
+  <!-- Control buttons -->
   <button id="goButton">Go</button>
   <button id="haltButton">Halt</button>
 
   <script>
-    // Step 5a: Variable to record time when "Halt" is pressed
+    // Initialize haltTime to undefined
     let haltTime = undefined;
-    let countdown; // for setTimeout
-    let count = 0; // counter for countdown display
-    let countdownInterval; // for interval to update count
 
-    // Step 5b: Function to record time
+    // Function to record the time when 'Halt' is pressed
     function recordTime() {
       haltTime = Date.now();
       console.log("Halt button pressed at:", haltTime);
     }
 
-    // Function to start countdown
-    function startCountdown() {
-      document.getElementById('target').textContent = "Get ready...";
-      count = Math.floor(Math.random() * 5) + 3; // Random time between 3 and 7 seconds
-      document.getElementById('counter').textContent = "Count: " + count;
+    // Function to begin the countdown
+    function beginTime() {
+      let countdownElement = document.getElementById('counter');
+      let targetElement = document.getElementById('target');
 
-      // Countdown timer display
-      countdownInterval = setInterval(() => {
-        count--;
-        document.getElementById('counter').textContent = "Count: " + count;
-        if (count <= 0) {
-          clearInterval(countdownInterval); // Stop updating count
-          document.getElementById('target').textContent = "Now! Press Halt!";
+      // Reset haltTime and target display
+      haltTime = undefined;
+      targetElement.innerHTML = "Your time";
+
+      // Countdown from 5 to 0 (5 seconds)
+      for (let i = 0; i <= 5; i++) {
+        setTimeout(() => {
+          countdownElement.innerHTML = "Count: " + (5 - i);
+        }, i * 1000); // delay increases each second
+      }
+
+      // Check if the user pressed "Halt" on time
+      setTimeout(() => {
+        if (haltTime === undefined) {
+          targetElement.innerHTML = "Not soon enough!";
+        } else {
+          let targetTime = Date.now();
+          let elapsedTime = targetTime - haltTime; // difference in milliseconds
+          targetElement.innerHTML = "Time was " + elapsedTime + " ms!";
         }
-      }, 1000);
-
-      // Timeout to trigger "Now! Press Halt!"
-      countdown = setTimeout(() => {
-        document.getElementById('target').textContent = "Now! Press Halt!";
-      }, count * 1000);
+      }, 5000); // runs when countdown hits 0 (after 5 seconds)
     }
 
-    // Step 5c: Attach functions to buttons
-    document.getElementById('goButton').onclick = startCountdown;
+    // Attach event listeners
+    document.getElementById('goButton').onclick = beginTime;
     document.getElementById('haltButton').onclick = recordTime;
   </script>
 
