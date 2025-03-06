@@ -1,66 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Name Reflexes</title> <!-- Replace 'Your Name' with your actual name -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
     body {
-      text-align: center;
       font-family: Arial, sans-serif;
+      text-align: center;
       margin-top: 50px;
     }
     #target, #counter {
       font-size: 24px;
-      margin-top: 20px;
+      margin: 20px;
+    }
+    button {
+      font-size: 18px;
+      margin: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <h1>Your Name Reflexes</h1> <!-- Replace 'Your Name' with your actual name -->
+  <h1>Prudhvi Chigurupati Reflexes</h1> <!-- Replace 'Your Name' with your actual name -->
+
+  <!-- Step 3: Two DIV elements -->
   <div id="target">Your time</div>
   <div id="counter">Count: 0</div>
 
-  <button type="button" class="btn btn-primary" id="goButton">Go</button>
-  <button type="button" class="btn btn-danger" id="haltButton">Halt</button>
+  <!-- Step 4: Two buttons -->
+  <button id="goButton">Go</button>
+  <button id="haltButton">Halt</button>
 
   <script>
+    // Step 5a: Variable to record time when "Halt" is pressed
     let haltTime = undefined;
-    let counter = 0;
-    let timer;
-    
-    // Function to start countdown and show random time
-    function startCountdown() {
-      document.getElementById('target').textContent = "Your time will be shown soon...";
-      counter = 0;
-      document.getElementById('counter').textContent = "Count: " + counter;
-      
-      // Random countdown between 2-7 seconds
-      const randomDelay = Math.floor(Math.random() * 5000) + 2000; // Between 2-7 seconds
-      timer = setTimeout(function() {
-        document.getElementById('target').textContent = "Now! Press Halt!";
-      }, randomDelay);
-    }
+    let countdown; // for setTimeout
+    let count = 0; // counter for countdown display
+    let countdownInterval; // for interval to update count
 
-    // Function to record the time when Halt button is pressed
+    // Step 5b: Function to record time
     function recordTime() {
       haltTime = Date.now();
       console.log("Halt button pressed at:", haltTime);
     }
 
-    // Event listeners
-    document.getElementById('goButton').onclick = function() {
-      startCountdown();
-    };
-    
-    document.getElementById('haltButton').onclick = function() {
-      recordTime();
-    };
+    // Function to start countdown
+    function startCountdown() {
+      document.getElementById('target').textContent = "Get ready...";
+      count = Math.floor(Math.random() * 5) + 3; // Random time between 3 and 7 seconds
+      document.getElementById('counter').textContent = "Count: " + count;
+
+      // Countdown timer display
+      countdownInterval = setInterval(() => {
+        count--;
+        document.getElementById('counter').textContent = "Count: " + count;
+        if (count <= 0) {
+          clearInterval(countdownInterval); // Stop updating count
+          document.getElementById('target').textContent = "Now! Press Halt!";
+        }
+      }, 1000);
+
+      // Timeout to trigger "Now! Press Halt!"
+      countdown = setTimeout(() => {
+        document.getElementById('target').textContent = "Now! Press Halt!";
+      }, count * 1000);
+    }
+
+    // Step 5c: Attach functions to buttons
+    document.getElementById('goButton').onclick = startCountdown;
+    document.getElementById('haltButton').onclick = recordTime;
   </script>
 
 </body>
