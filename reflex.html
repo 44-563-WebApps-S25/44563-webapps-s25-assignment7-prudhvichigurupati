@@ -24,60 +24,50 @@
 </head>
 <body>
 
-  <h1>Your Name Reflexes</h1>
+  <h1>Prudhvi Chigurupati Reflexes</h1>
 
-  <!-- Displays the user's result -->
   <div id="target">Your time</div>
-
-  <!-- Countdown display -->
   <div id="counter">Count: 5</div>
 
-  <!-- Control buttons -->
   <button id="goButton">Go</button>
   <button id="haltButton">Halt</button>
 
   <script>
-    // Initialize haltTime to undefined
     let haltTime = undefined;
 
-    // Function to record the time when 'Halt' is pressed
     function recordTime() {
       haltTime = Date.now();
-      console.log("Halt button pressed at:", haltTime);
     }
 
-    // Function to begin the countdown
     function beginTime() {
       let countdownElement = document.getElementById('counter');
       let targetElement = document.getElementById('target');
-
-      // Reset haltTime and target display
       haltTime = undefined;
       targetElement.innerHTML = "Your time";
 
-      // Countdown from 5 to 0 (5 seconds)
-      for (let i = 0; i <= 5; i++) {
+      let countdown = Math.floor(Math.random() * 9) + 2;
+
+      for (let i = 0; i <= countdown; i++) {
         setTimeout(() => {
-          countdownElement.innerHTML = "Count: " + (5 - i);
-        }, i * 1000); // delay increases each second
+          countdownElement.innerHTML = "Count: " + (countdown - i);
+        }, i * 1000);
       }
 
-      // Check if the user pressed "Halt" on time
       setTimeout(() => {
         if (haltTime === undefined) {
           targetElement.innerHTML = "Not soon enough!";
         } else {
           let targetTime = Date.now();
-          let elapsedTime = targetTime - haltTime; // difference in milliseconds
+          let elapsedTime = targetTime - haltTime;
           targetElement.innerHTML = "Time was " + elapsedTime + " ms!";
         }
-      }, 5000); // runs when countdown hits 0 (after 5 seconds)
+      }, countdown * 1000);
     }
 
-    // Attach event listeners
     document.getElementById('goButton').onclick = beginTime;
     document.getElementById('haltButton').onclick = recordTime;
   </script>
 
 </body>
 </html>
+

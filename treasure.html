@@ -63,10 +63,20 @@
         let score = 0;
         let locationsVisited = 0;
         let lastLocation = -1;
-        const silverLocations = [2, 5, 11, 21, 32];
-        const goldLocation = 15;
-        const snakeLocation = 20;
         let gameOver = false;
+
+        // Randomly assign the snake, silver, and gold locations
+        const randomLocation = () => Math.floor(Math.random() * 35);
+        let silverLocations = [randomLocation(), randomLocation(), randomLocation(), randomLocation(), randomLocation()];
+        let goldLocation = randomLocation();
+        let snakeLocation = randomLocation();
+
+        // Make sure the silver, gold, and snake locations are unique
+        while (silverLocations.includes(snakeLocation) || silverLocations.includes(goldLocation) || snakeLocation === goldLocation) {
+            silverLocations = [randomLocation(), randomLocation(), randomLocation(), randomLocation(), randomLocation()];
+            goldLocation = randomLocation();
+            snakeLocation = randomLocation();
+        }
 
         function check(position) {
             if (gameOver) return;
@@ -97,6 +107,26 @@
 
             document.getElementById("score").innerText = `Score: ${score}`;
             document.getElementById("locations").innerText = `Number of locations checked: ${locationsVisited}`;
+
+            if (gameOver) {
+                alert("Game Over! The snake got you!");
+            } else {
+                moveSnake();
+            }
+        }
+
+        function moveSnake() {
+            // Move the snake diagonally, wrapping around the edges of the grid
+            const snakeRow = Math.floor(snakeLocation / 7);
+            const snakeCol = snakeLocation % 7;
+
+            let newRow = (snakeRow + 1) % 5; // Wrap rows
+            let newCol = (snakeCol + 1) % 7; // Wrap columns
+            snakeLocation = newRow * 7 + newCol;
+
+            const snakeImg = document.getElementById(`img${snakeLocation}`);
+            snakeImg.src = "snake.png";
+            snakeImg.alt = "Rattlesnake";
         }
 
         function help() {

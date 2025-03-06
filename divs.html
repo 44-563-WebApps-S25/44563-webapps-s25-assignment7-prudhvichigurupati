@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prudhvi Chigurupati Builds List with Divs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: flex-start;
+    }
+    .divlist {
+      padding: 10px;
+      background-color: lightblue;
+      border: 1px solid #000;
+      border-radius: 5px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Prudhvi Chigurupati Builds List with Divs</h1>
+
+  <!-- Text input to get item value -->
+  <input type="text" id="itemInput" placeholder="Enter item text">
+  
+  <!-- Buttons to add/remove/promote items -->
+  <button id="addFrontButton">Add front</button>
+  <button id="addEndButton">Add end</button>
+  <button id="removeButton">Remove</button>
+  <button id="promoteButton">Promote</button>
+
+  <!-- Flex container to hold the list -->
+  <div class="flex-container" id="flexContainer">
+    <div class="divlist">Item 1</div>
+    <div class="divlist">Item 2</div>
+    <div class="divlist">Item 3</div>
+  </div>
+
+  <script>
+    const addFrontButton = document.getElementById('addFrontButton');
+    const addEndButton = document.getElementById('addEndButton');
+    const removeButton = document.getElementById('removeButton');
+    const promoteButton = document.getElementById('promoteButton');
+    const itemInput = document.getElementById('itemInput');
+    const flexContainer = document.getElementById('flexContainer');
+
+    // Add item to the end
+    addEndButton.addEventListener('click', () => {
+      const newItemText = itemInput.value.trim();
+      if (newItemText !== "") {
+        const newDiv = document.createElement('div');
+        newDiv.innerHTML = newItemText;
+        newDiv.className = 'divlist';
+        flexContainer.appendChild(newDiv);
+        itemInput.value = '';
+      }
+    });
+
+    // Add item to the front
+    addFrontButton.addEventListener('click', () => {
+      const newItemText = itemInput.value.trim();
+      if (newItemText !== "") {
+        const newDiv = document.createElement('div');
+        newDiv.innerHTML = newItemText;
+        newDiv.className = 'divlist';
+        flexContainer.insertBefore(newDiv, flexContainer.firstChild);
+        itemInput.value = '';
+      }
+    });
+
+    // Remove the middle element
+    removeButton.addEventListener('click', () => {
+      const divListItems = document.getElementsByClassName('divlist');
+      const length = divListItems.length;
+      if (length > 0) {
+        const middleIndex = Math.floor(length / 2);
+        divListItems[middleIndex].remove();
+      }
+    });
+
+    // Promote a random element closer to the front
+    promoteButton.addEventListener('click', () => {
+      const divListItems = document.getElementsByClassName('divlist');
+      const length = divListItems.length;
+      if (length > 1) {
+        const randomIndex = Math.floor(Math.random() * length);
+        const elementToPromote = divListItems[randomIndex];
+        if (randomIndex > 0) {
+          flexContainer.insertBefore(elementToPromote, divListItems[randomIndex - 1]);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
