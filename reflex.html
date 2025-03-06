@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Your Name Reflexes</title> <!-- Replace 'Your Name' with your actual name -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+    }
+    #target, #counter {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your Name Reflexes</h1> <!-- Replace 'Your Name' with your actual name -->
+  <div id="target">Your time</div>
+  <div id="counter">Count: 0</div>
+
+  <button type="button" class="btn btn-primary" id="goButton">Go</button>
+  <button type="button" class="btn btn-danger" id="haltButton">Halt</button>
+
+  <script>
+    let haltTime = undefined;
+    let counter = 0;
+    let timer;
+    
+    // Function to start countdown and show random time
+    function startCountdown() {
+      document.getElementById('target').textContent = "Your time will be shown soon...";
+      counter = 0;
+      document.getElementById('counter').textContent = "Count: " + counter;
+      
+      // Random countdown between 2-7 seconds
+      const randomDelay = Math.floor(Math.random() * 5000) + 2000; // Between 2-7 seconds
+      timer = setTimeout(function() {
+        document.getElementById('target').textContent = "Now! Press Halt!";
+      }, randomDelay);
+    }
+
+    // Function to record the time when Halt button is pressed
+    function recordTime() {
+      haltTime = Date.now();
+      console.log("Halt button pressed at:", haltTime);
+    }
+
+    // Event listeners
+    document.getElementById('goButton').onclick = function() {
+      startCountdown();
+    };
+    
+    document.getElementById('haltButton').onclick = function() {
+      recordTime();
+    };
+  </script>
+
+</body>
+</html>
